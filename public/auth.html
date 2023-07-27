@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+<body>
+    <form id="registerform">
+        <input type="text" name="" id="username">
+        <input type="email" name="" id="email">
+        <input type="password" name="" id="password">
+        <input type="number" name="" id="phno">
+        <input type="submit" name="" id="">
+    </form>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.js"></script>
+    <script>
+
+        document.querySelector("#registerform").addEventListener('submit',(e)=>{
+            e.preventDefault()
+        
+
+            let uname = document.getElementById("username").value
+            let password = document.getElementById("password").value
+            let phonenumber = document.getElementById("phno").value
+            let email = document.getElementById('email').value
+console.log(uname)
+
+            axios.post(`/register`,{
+                username: uname,
+                email: email,
+                phonenumber: phonenumber,
+                password: password
+            })
+            .then((response)=>{
+                console.log(response.data)
+                uname.value = ""
+             password.value = ""
+             phonenumber.value= ""
+             email.value = ""
+            })
+            .catch((e)=>{
+                console.log(e)
+            })
+
+    
+
+            
+        })
+    </script>
+</body>
+</html>
