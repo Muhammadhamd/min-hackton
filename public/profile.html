@@ -136,7 +136,7 @@ const task = ref.child(name).put(imgtouploaddb, metadata);
 
 const snapshot = await task
 
-const imgUrl = snapshot.ref.getDownloadURL()
+const imgUrl = await snapshot.ref.getDownloadURL()
 
      axios.post("/post", {
       heading: document.getElementById("title").value,

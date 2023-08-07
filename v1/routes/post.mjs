@@ -2,14 +2,18 @@ import express from "express"
 import mongoose from "mongoose"
 import path from "path"
 import axios from "axios"
+import { ObjectId } from "mongodb"
+
 const __dirname = path.resolve()
 const router = express.Router()
+import {client} from "./../../mongodb.mjs"
 
-
+const db = client.db("userdatabase"),
+      userCol = db.collection("users"),
+      postsCol = db.collection('posts')
 
 
    
-
 
 
 
@@ -50,38 +54,33 @@ const postSchema = new mongoose.Schema({
         type:Number,
         required:true
     } ,
-    
+    image:{
+        type:String,
+        required:true
+    } ,
         
 })
 
 const postModel = mongoose.model("Post", postSchema)
 
-// Middleware to fetch and store user data
-// const UserData = async (req, res, next) => {
-//     try {
-//       const response = await axios.get('/currentuser');
-//       const userData = response.data;
-//       req.userData = userData;
-//       next();
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).send('Error');
-//     }
-//   };
+
+  
+       
+    
+
 router.post("/post", async(req,res)=>{
 
-   
+    const currentUserEmail = res.locals.decodedData
+
+
+    const userData =await userCol.findOne({email:currentUserEmail})
    const {heading , description , waranty , returnDays  , Deliverywillbe , price , image}= req.body
 
- 
-    // Access user data from req.userData
-    const userData = req.userData;
-
-
+   
    const post = await postModel.create({
-    username: 'userData.username',
-    userId:' userData._id',
-    sellername: 'userData.name',
+    username: userData.username,
+    userId: userData._id,
+    sellername:userData.name,
     price: price,
     waranty: waranty,
     returnDays: returnDays, 
@@ -94,9 +93,36 @@ router.post("/post", async(req,res)=>{
    res.send("created")
 })
 
-router.get("/post",(req,res)=>{
+router.get("/posts", async(req,res ,next)=>{
+    
+    
+    const postsData =  postsCol.find({})
+ 
+    const posts = await postsData.toArray()
+
+        res.send(posts)
+})
+router.get("/post/:postId",async (req,res)=>{
+    const postId = req.params.postId
+
+    const post = await postsCol.findOne({ _id: new ObjectId(postId)})
+
+    if (!post) {
+        res.send("this post maybe deleted or disent exist")
+        return;
+    }
 
     res.sendFile(path.join(__dirname,"public/post.html"))
+
+ 
+      
+})
+router.get("postdata/:postId",async(req ,res)=>{
+
+    const postId = req.params.postId
+
+    const postdata = await postsCol.findOne({ _id: new ObjectId(postId)})
+    res.send(postdata)
 })
 
 export default router

@@ -69,6 +69,31 @@
         </div>
     </div>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.js"></script>
     
+    <script>
+
+function getQueryParam() {
+    const urlPath = window.location.pathname;
+    const parts = urlPath.split("/"); // Split the path by "/"
+    return parts[2]; // The "userId" will be at index 2 in this case
+}
+
+        // Fetch user data and populate the page
+        const postId = getQueryParam('postId');
+        console.log(postId)
+
+        document.addEventListener("DOMContentLoaded",async(e)=>{
+
+            await axios.get(`/postdata/${postId}`)
+        .then((res)=>{
+            console.log(res)
+        })
+        .catch((e)=>{
+            console.log(e)
+        })
+        })
+        
+    </script>
 </body>
 </html>

@@ -12,10 +12,10 @@ router.get("/currentuser", async(req,res)=>{
     const currentUserEmail = res.locals.decodedData
 
 
-   const userData =await col.findOne({email:currentUserEmail})
+    const userData =await col.findOne({email:currentUserEmail})
 
     res.send(userData)
-    console.log(userData)
+    console.log("ytfrujyhy",userData)
 
     // res.status()
 
