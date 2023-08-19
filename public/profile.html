@@ -1,214 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>profile</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>profile</title>
 </head>
 
 
 <body class="bg-[#f2f2f2] ">
-  <div style="display: none;" id="create-post-div" class=" w-full fixed flex top-0 justify-center items-center h-[100vh] bg-[#000000c2] ">
-    <form class=" max-w-[900px] w-full bg-white rounded p-[20px]" id="create-post">
-        <label for="" class="w-full">
-          <span>Product Highlight text</span>
-          <input id="title" type="text" class="w-full px-3 py-2 border rounded ">
-        </label>
-        <div class="w-full bg-slate-500 max-h-[300px] flex justify-center ">
-          <img class="w-full" src="" alt="" id="display-selected-img">
-        </div>
-        <input type="file" id="upload-file" class="block  text-sm text-slate-500
-        file:mr-4 file:py-2 file:px-4
-        file:rounded-full file:border-0
-        file:text-sm file:font-semibold
-        file:bg-violet-50 file:text-violet-700
-        hover:file:bg-violet-100">
-      <label for="">
-        <span>Product description</span>
-        <textarea name="" id="description" class="w-full px-3 py-2 border rounded "></textarea>
-      </label>
-      <label for="">
-        <span>
-          Price
-        </span>
-        <input type="number" id="price" class="w-full px-3 py-2 border rounded ">
-      </label>
-      <div>
-        <select name="Delivery" id="waranty" class="border bg-transparent w-[200px]">
-          <option value="" selected>Waranty</option>
-          <option value="no waranty">no waranty</option>
-          <option value="1month">1month</option>
-          <option value="1-5month">1-5month</option>
-          <option value="6month">6month</option>
-          <option value="1year">1year</option>
-          <option value="+1year">+1year</option>
-        </select>
-        <select name="Delivery" id="Deliverydays" class="border bg-transparent w-[200px]">
-          <option value="" selected>Delivery days</option>
-          <option value="3">3Days</option>
-          <option value="4">4Days</option>
-          <option value="5">5Days</option>
-          <option value="6">6Days</option>
-          <option value="7">7Days</option>
-        </select>
-        <select name="return-day" id="return-day" class="border bg-transparent w-[200px]">
-          <option value="" selected>can be return in days</option>
-          <option value="4">4</option>
-          <option value="7">7</option>
-        </select>
-      </div>
-      <input type="submit" value='submit'>
-    </form>
-   </div>
-    <div class="container mx-auto p-4">
-        <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+  <nav class="bg-[#7749F8] flex text-white justify-between px-[5%] py-[.5%]">
+    <h1 class="font-bold text-[23px]">Personal blogging App</h1>
+
+    <div class="flex items-center gap-[20px]" id="after-logindiv">
+      <a href="./dashbord.html">
+        <h1 id="" class="text-[12px]">
+          dashbord
+        </h1>
+      </a>
+      <a href="./public/profile.html">
+        <h1 id="displayUserName" class="text-[12px]">
+          USERNAME
+        </h1>
+      </a>
+      <button class="text-[12px]" id="logoutbtn">Logout</button>
+
+    </div>
+    <button class="text-[12px]" id="loginbtn"><a href="./public/register.html">login</a></button>
+  </nav>
+
+  <div class="container mx-auto p-4">
+    <div class="bg-white w-[881px] rounded-lg shadow-lg p-[20px]">
+
+      <div class="w-full" id="changeimgdiv" style="display: none;">
+        <form class="300px bg-white absolute" id="change-img">
           <div>
-            <button>Edit</button>
-            <button id="add-product">Add Product</button>
+            <img src="" alt="" id="previewimage">
           </div>
-          <img class="w-24 h-24 md:w-32 md:h-32 rounded-full mx-auto" src="https://avatars.githubusercontent.com/u/111101485?v=4" alt="Profile Picture">
-          <h1 class="text-2xl md:text-4xl font-bold text-center mt-4 " id="username-div">John Doe</h1>
-          <p class="text-gray-600 text-center">Web Developer</p>
-          <div class="mt-6 md:flex md:justify-center md:space-x-6">
-            <div>
-              <h2 class="text-lg font-semibold">Email</h2>
-              <p class="text-gray-800" id="email-div">john.doe@example.com</p>
-            </div>
-            <div>
-              <h2 class="text-lg font-semibold">Location</h2>
-              <p class="text-gray-800">New York, USA</p>
-            </div>
-            <!-- Add more details here as needed -->
-          </div>
-          <div class="mt-6">
-            <h2 class="text-lg font-semibold">About Me</h2>
-            <p class="text-gray-800">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Donec pharetra arcu vel velit vulputate
-              eleifend. Integer scelerisque varius turpis, id vestibulum orci tincidunt a.
-            </p>
-          </div>
-        </div>
+          <input type="file" id="imgfile">
+          <input type="submit">
+        </form>
       </div>
+      <div id="currentimagediv" class="max-w-[300px] flex justify-center items-center">
+
+        <img src="../profile 2.png" id="currentimage" class="w-full" alt="">
+      </div>
+      <div>
+        <h1 class="text-2xl md:text-4xl font-bold text-center mt-2 " id="displayUserName">Hamd ali</h1>
+        <button>edit</button>
+      </div>
+      <div>
+        <h1>PAssword</h1>
+        <form action="">
+          <input type="password" id="password" placeholder="Old Password"
+            class="w-[240px] h-[38px]rounded px-4 py-3 text-sm text-slate-500 outline-non border-slate-500 border">
+          <input type="password" id="password" placeholder=" New Password"
+            class="w-[240px] h-[38px]rounded px-4 py-3 text-sm text-slate-500 outline-non border-slate-500 border">
+          <input type="password" id="password" placeholder="Reenter Password"
+            class="w-[240px] h-[38px]rounded px-4 py-3 text-sm text-slate-500 outline-non border-slate-500 border">
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js "></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js "></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js "></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js "></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.js"></script>
+  <script src="../src/navbar-validation.js"></script>
+  <!-- <script src="../js/currentuser.js"></script> -->
+  <script>
+
    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js "></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js "></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.js"></script>
-    <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyDcwQsQZBVGCl1oYr9jvUZSXmR0_A6C-SI",
-  authDomain: "buying-selling-hh.firebaseapp.com",
-  projectId: "buying-selling-hh",
-  storageBucket: "buying-selling-hh.appspot.com",
-  messagingSenderId: "293548727797",
-  appId: "1:293548727797:web:ffce5ab28bff14fb2754bc"
-};
-firebase.initializeApp(firebaseConfig);
+    //   let provider = new firebase.auth.GoogleAuthProvider();
+    //  let auth = firebase.auth();
 
-        document.getElementById("add-product").addEventListener("click",()=>{
 
-         
+    document.getElementById("currentimage").addEventListener("click", (e) => {
 
- document.querySelector("#create-post-div").style.display = 'flex'
+      e.preventDefault()
+      document.getElementById("changeimgdiv").style.display = "block"
+    })
+
+    const uploadFile = document.getElementById("imgfile")
+    uploadFile.addEventListener("change", (event) => {
+
+      let output = document.getElementById('previewimage');
+      output.src = URL.createObjectURL(uploadFile.files[0]);
+
+    })
+    document.getElementById("change-img").addEventListener("submit", (e) => {
+      e.preventDefault()
+      let user = firebase.auth().currentUser;
+      let uploadFileToDb = uploadFile.files[0]
+      const ref = firebase.storage().ref();
+      const name = + new Date() + "-" + uploadFileToDb.name;
+      const metadata = {
+        contentType: uploadFileToDb.type
+      };
+      const task = ref.child(name).put(uploadFileToDb, metadata);
+
+
+      task
+        .then(snapshot => snapshot.ref.getDownloadURL())
+        .then(url => {
+          imageDataURL(url);
+
+
+
+
         })
+        .catch((error) => { console.log(error) });
 
-        const uploadFile = document.getElementById("upload-file")
-        uploadFile.addEventListener("change", (event) =>{
+      // document.querySelector("form").reset()
 
-            let output = document.getElementById('display-selected-img');
-    output.src = URL.createObjectURL(uploadFile.files[0]);
-    
+
+      function imageDataURL(url) {
+        db.collection("profileimages")
+          .add({
+
+            BlogImg: url,
+            userid: user.uid
+
+
+          })
+          .then((docRef) => {
+            console.log("Document written with ID: ", docRef.id)
+            ulodadedMSG.classList = "px-[12px] py-[10px] bg-black text-white font-bold h-[30px] rounded-[30px] shadow-[0px_0px_4px_#00000070] flex justify-between items-center text-[12px] tracking-wide fixed right-50 left-50 top-10"
+            ulodadedMSG.innerHTML = `Uploaded sucessfully <a href="/#post${docRef.id}">go direct</a>`
+
+
+
+
+            console.log(docRef.data().BlogImg)
+          })
+          .catch((e) => {
+
+            console.log("eroorrr agaya", e)
+          })
+
+      }
     })
 
 
-        document.getElementById("create-post").addEventListener("submit", async (e) => {
-  e.preventDefault();
-const imgtouploaddb = uploadFile.files[0]
-  
-  const ref = firebase.storage().ref();
-  const name = +new Date() + "-" + imgtouploaddb.name;
-const metadata = {
- contentType: imgtouploaddb.type
-};
+    firebase.auth().onAuthStateChanged(async function (user) {
 
-const task = ref.child(name).put(imgtouploaddb, metadata);
+if (user) {
+  const pfusername = db.collection("users");
 
+const ur = pfusername.where("userid", "==", user.uid);
+  ur.get()
+.then((querySnapshot) => {
+querySnapshot.forEach((doc) => {
+let data = doc.data();
+console.log("Document Data:", data);
+document.getElementById("displayUserName").innerHTML = `${data.lastname} ${data.firstname}`
+});
+})
+.catch((error) => {
+console.log("Error getting documents:", error);
+});
+  const pfimages = db.collection("profileimages");
 
-const snapshot = await task
+const q = pfimages.where("userid", "==", user.uid);
 
-const imgUrl = await snapshot.ref.getDownloadURL()
+q.get()
+.then((querySnapshot) => {
+querySnapshot.forEach((doc) => {
+var documentData = doc.data();
+console.log("Document Data:", documentData);
 
-     axios.post("/post", {
-      heading: document.getElementById("title").value,
-      description: document.getElementById("description").value,
-      waranty: document.getElementById("waranty").value, 
-      returnDays: document.getElementById("return-day").value, 
-      Deliverywillbe: document.getElementById("Deliverydays").value, 
-      image: imgUrl,
-      price: document.getElementById("price").value, 
-    })
-    .then((res)=>{
-      console.log(res)
-    })
-    .catch( (e)=>{
-      console.log(e);
-
-    })
-    document.querySelector("#create-post-div").style.display = 'none'
+document.getElementById("currentimage").src = documentData.BlogImg
+});
+})
+.catch((error) => {
+console.log("Error getting documents:", error);
 });
 
-        document.addEventListener("DOMContentLoaded", async()=>{
-
-           await axios.get(`/userAPIS`)
-        .then((res)=>{
-            console.log(res)
-            let data = res.data
-           
-
-        })
-        .catch((e)=>{
-            console.log(e)
-        })
-        })
-
-
-        
-
-    function getQueryParam() {
-    const urlPath = window.location.pathname;
-    const parts = urlPath.split("/"); // Split the path by "/"
-    return parts[2]; // The "userId" will be at index 2 in this case
 }
-
-        // Fetch user data and populate the page
-        const userId = getQueryParam('userId');
-        console.log(userId)
-
-        // function allIDs(data){
-        //     console.log(data)
+else{
+  window.location.href = "./login.html"
+}
+})
 
 
 
-        // }
-
-    // const accountId = getUserIdFromUrl()
-            
-    document.addEventListener("DOMContentLoaded",async()=>{
-       await axios.get(`/userdata/${userId}`)
-            .then((res)=>{
-
-                console.log(res)
-
-                document.querySelector("#username-div").innerHTML = res.data.username
-                document.querySelector("#email-div").innerHTML = res.data.email
-                document.querySelector("#userid-div").innerHTML = res.data.id
-            })
-            .catch((e)=>{
-                console.log(e)
-            })
+    // document.addEventListener("DOMContentLoaded", (e) => {
 
 
-    })
-    </script>
+    //   let user = firebase.auth().currentUser;
+    //   console.log(user)
+    //   const pfimages = collection(db, "profileimages");
+
+    //   // Create a query against the collection.
+    //   // const q = firebase.firestore().query(pfimages, where("userid", "==", user));
+
+    //   // console.log(q)
+    // })
+  </script>
 </body>
+
 </html>

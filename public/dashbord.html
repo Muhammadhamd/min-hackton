@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body class="bg-[#F8F9FA]">
+  <nav class="bg-[#7749F8] flex text-white justify-between px-[5%] py-[.5%]">
+    <h1 class="font-bold text-[23px]">Personal blogging App</h1>
+
+    <div class="flex items-center gap-[20px]" id="after-logindiv">
+        
+     <a href="./profile.html"> <h1 id="displayUserName" class="text-[12px]">
+        USERNAME
+    </h1></a>
+    <button class="text-[12px]" id="logoutbtn">Logout</button>
+
+    </div>
+    <button class="text-[12px]" id="loginbtn" ><a href="./register.html">login</a></button>
+  </nav>
+
+      <div class="py-[32px] pl-[160px] bg-white">
+        <h1 class=" text-[40px] font-[700]">Dashbord</h1>
+      </div>
+      <div class="flex  justify-center items-center flex-col">
+        <div class="bg-white w-[881px] p-[30px] rounded-lg gap-[20px]">
+            <form id="createpost">
+            <input type="text" id="heading"placeholder="heading" class="border-[#DEE2E6] w-full h-[38px] rounded px-4 py-3 text-sm text-slate-500 outline-non border-slate-500 border">
+<textarea id="paragraph" class="border-[#DEE2E6] w-full h-[38px] rounded px-4 py-3 text-sm text-slate-500 outline-non border-slate-500 border"> What is in your head</textarea>
+<button class="bg-[#7749F8] text-white shadow rounded py-2 px-3 mt-4 font-semibold">Publish Post</button>
+           
+</form >
+        </div>
+
+        <div id="homepost" class=" flex flex-col gap-[20px]">
+
+        </div>
+      </div>
+      <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js "></script>
+      <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js "></script>
+      <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+      <script src="../src/navbar-validation.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+<script>
+        // document.getElementById('logoutbtn').addEventListener("click",(e)=>{
+        //     // e.preventDefault()
+
+        //     axios.post("/logout")
+        //     .then((res)=>{
+        //         console.log(res.data)
+        //     })
+        //     .catch((e)=>{
+        //         console.log(e)
+        //     })
+        // })
+        
+// const firebaseConfig = {
+  
+//   apiKey: "AIzaSyBEDzzo5U16CzvjwjZAF52JFJVHtYcqxlw",
+//    authDomain: "blogging-hamd.firebaseapp.com",
+//    projectId: "blogging-hamd",
+//    storageBucket: "blogging-hamd.appspot.com",
+//    messagingSenderId: "1082381242714",
+//    appId: "1:1082381242714:web:8e0fc3375d1fd2a66fe363"
+//  };
+
+//  // Initialize Firebase
+//  firebase.initializeApp(firebaseConfig);  
+ 
+//   let db = firebase.firestore();
+//  let auth = firebase.auth();
+
+    
+
+firebase.auth().onAuthStateChanged(async function(user){
+
+    if(!user){
+      window.location.href = "./login.html";
+      
+
+
+    }
+  
+  })
+
+document.getElementById("createpost").addEventListener("submit",(e)=>{
+
+  
+
+  e.preventDefault()
+ let heading = document.getElementById("heading")
+ let paragraph = document.getElementById("paragraph")
+  
+  let user = firebase.auth().currentUser;
+  console.log(user)
+
+  const pfimages = db.collection("profileimages");
+
+const q = pfimages.where("userid", "==", user.uid);
+
+let profileImgUrl = ''
+q.get()
+.then((querySnapshot) => {
+querySnapshot.forEach((doc) => {
+var documentData = doc.data();
+console.log("Document Data img:", documentData);
+
+profileImgUrl= documentData.BlogImg
+funProfileImg(profileImgUrl)
+});
+})
+.catch((error) => {
+console.log("Error getting documents:", error);
+});
+
+
+
+
+
+function funProfileImg(imgurl){
+  db.collection("blogs")
+         .add({
+
+          title:heading.value,
+          text:paragraph.value,
+          userid: user.uid,
+          // username:username,
+          profileImgUrl:imgurl,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+
+         }) 
+         .then((docRef) =>{
+            console.log("Document written with ID: ", docRef.id)
+            
+           
+            // ulodadedMSG.innerHTML = "Uploaded sucessfully"
+          //   console.log(docRef.data().BlogImg)
+         })
+         .catch((e) => {
+      
+            console.log("eroorrr agaya", e)
+         })
+}
+ 
+  // db.collection("blogs")
+  //        .add({
+
+  //         title:heading.value,
+  //         text:paragraph.value,
+  //         userid: user.uid,
+  //         profileImgUrl:profileImgUrl
+  //        }) 
+  //        .then((docRef) =>{
+  //           console.log("Document written with ID: ", docRef.id)
+            
+           
+  //           // ulodadedMSG.innerHTML = "Uploaded sucessfully"
+  //         //   console.log(docRef.data().BlogImg)
+  //        })
+  //        .catch((e) => {
+      
+  //           console.log("eroorrr agaya", e)
+  //        })
+})
+
+
+ firebase.auth().onAuthStateChanged(async function (user) {
+
+if (user) {
+  
+  const pfblogs = db.collection("blogs");
+
+const q = pfblogs.where("userid", "==", user.uid);
+
+q.get()
+.then((querySnapshot) => {
+querySnapshot.forEach((doc) => {
+let data = doc.data();
+console.log("Document Data:", data);
+
+let post = `
+<div class="min-[900px] w-[781px] shadow rounded-[12px] bg-white p-[20px]">
+  <div class="text-[10px]">
+    <button  onclick="deletePost(${doc.id})">delete post<button>
+    </div>
+            <div class="flex"> 
+              <div class="w-[80px] mr-[12px]">
+                <img src="${data.profileImgUrl}" class="w-full" alt="">
+              </div>
+              <div>
+                <div class="text-[24px] font-[600] w-[330px]">
+                  <h1>${data.title}</h1>
+                </div>
+                <div class="text-[#6C757D] text-[16px] font-[600] flex">
+                  <h1>Elon Musk</h1>
+                  -
+                  <h1>${data.createdat}</h1>
+                </div>
+              </div>
+            </div>
+            <div class="text-[#6C757D] text-[16px] font-[400] leading-[28px] mt-[4px]">
+              ${data.text}
+            </div>
+          </div>
+         `;
+         document.getElementById("homepost").innerHTML += post;
+});
+})
+.catch((error) => {
+console.log("Error getting documents:", error);
+});
+
+}
+})
+
+ function deletePost(postId) {
+alert("gag")
+  //  let postRef = db.collection("blogs").doc(postId);
+// console.log(postRef)
+//   postRef.delete()
+//     .then(() => {
+//       // location.reload();
+//       console.log("Post deleted successfully.");
+//     })
+//     .catch((error) => {
+//       console.error("Error deleting post:", error);
+//     });
+}
+
+</script>
+</body>
+</html>

@@ -12,6 +12,7 @@ import cors from "cors"
 const SECRET = process.env.SECRET || "topsecret";
 import authrouter from "./v1/routes/auth.mjs"
 import apiv1 from "./v1/index.mjs"
+import apiv2 from "./v2/index.mjs"
 
 
 
@@ -23,7 +24,10 @@ app.use(cors({
 }));
 
 
-app.use(authrouter)
+app.use(apiv1)
+app.use('/',express.static(__dirname))
+
+
 
 app.use((req, res, next) => {
 
@@ -33,13 +37,14 @@ app.use((req, res, next) => {
         // res.status(401).send({
         //     message: "include http-only credentials with every request"
         // })
-        return res.redirect("/registration")
+        res.redirect("/signup")
+
      }
 
     jwt.verify(req.cookies.token, SECRET, function (err, decodedData) {
         if (!err) {
 
-            console.log("decodedData: ", decodedData);
+            console.log("decodedData: ", decodedData.email);
 
            
             const nowDate = new Date().getTime() / 1000;
@@ -51,7 +56,8 @@ app.use((req, res, next) => {
                     maxAge: 1,
                     httpOnly: true
                 });
-                res.redirect("/registration")
+                res.redirect("/signup")
+
                 return
 
             } else {
@@ -60,46 +66,20 @@ app.use((req, res, next) => {
 
                 res.locals.decodedData = decodedData.email;
                 req.body.token = decodedData
-                next();
-                
+                next()
             }
         } else {
-            res.redirect("/registration")
+            return res.redirect("/signup")
         }
     });
 })
 
 
 
-app.use(apiv1)
+app.use(apiv2)
 
-app.use('/',express.static(__dirname))
 
-const PORT = process.env.PORT | 2344
+const PORT = process.env.PORT | 23445
 app.listen(PORT,()=>{
     console.log(PORT)
 })
-mongoose.connect(mongodbURI);
-
-////////////////mongodb connected disconnected events///////////////////////////////////////////////
-mongoose.connection.on('connected', function () {//connected
-    console.log("Mongoose is connected");
-});
-
-mongoose.connection.on('disconnected', function () {//disconnected
-    console.log("Mongoose is disconnected");
-    process.exit(1);
-});
-
-mongoose.connection.on('error', function (err) {//any error
-    console.log('Mongoose connection error: ', err);
-    process.exit(1);
-});
-
-process.on('SIGINT', function () {/////this function will run jst before app is closing
-    console.log("app is terminating");
-    mongoose.connection.close(function () {
-        console.log('Mongoose default connection closed');
-        process.exit(0);
-    });
-});
